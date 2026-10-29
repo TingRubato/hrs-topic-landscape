@@ -4,5 +4,7 @@ title: "HRS Topic Landscape: topic modeling of Health and Retirement Study publi
 authors:
   - family-names: Xu
     given-names: Ting
+  - family-names: Wang
+    given-names: Ziming
 type: software
 license: MIT

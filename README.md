@@ -6,7 +6,7 @@ with ten document representations, clusters each one under 360 UMAP + HDBSCAN se
 all 3,600 clusterings against 800 rated abstract pairs, tests the best ones for stability, and
 writes the final topic model.
 
-**Author:** Ting Xu
+**Authors:** Ting Xu, Ziming Wang
 
 Final model: `all-mpnet-base-v2` embeddings, UMAP (n_neighbors 15, min_dist 0), HDBSCAN
 (min_cluster_size 50, min_samples 5, cluster_selection_epsilon 0), seed 42. On 6,303 abstracts it
