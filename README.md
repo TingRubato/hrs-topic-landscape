@@ -47,7 +47,12 @@ python -m pytest tests
 ```
 
 Run every command from the repository root. Each step writes the inputs of the next one into
-`data/` (set `HRS_DATA_DIR` to use another folder). No data is included in the repository.
+`data/` (set `HRS_DATA_DIR` to use another folder).
+
+`data/corpus.csv`, the output of step 2, is included: 6,303 abstracts with `document_id` (HRS
+bibliography article id), `title`, `abstract`, `embedding_text` (the cleaned title + abstract the
+models read), `year`, `doi` and `journal`. With it you can start at step 3. Abstracts remain the
+copyright of their publishers.
 
 ## Steps
 

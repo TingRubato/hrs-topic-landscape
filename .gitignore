@@ -10,7 +10,8 @@ __pycache__/
 .vscode/
 
 # data and outputs (rebuilt by the pipeline, not distributed)
-data/
+data/*
+!data/corpus.csv
 scraper/*.db
 scraper/*.log
 scraper/*.csv
