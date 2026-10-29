@@ -1,0 +1,7 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below."
+title: "HRS Topic Landscape: topic modeling of Health and Retirement Study publications"
+authors:
+  - family-names: Xu
+    given-names: Ting
+type: software

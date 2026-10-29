@@ -1,0 +1,19 @@
+# Python 3.12. Versions used to produce the published results.
+numpy==2.2.3
+scipy==1.17.0
+pandas==2.3.3
+scikit-learn==1.8.0
+umap-learn==0.5.12
+
+# step 3 (embedding); a GPU (CUDA or Apple MPS) is recommended
+torch==2.11.0
+transformers==5.17.0
+sentence-transformers==6.1.0
+
+# scraper, step 1 and step 6 (web requests)
+requests==2.34.0
+beautifulsoup4==4.14.3
+lxml==6.1.0
+undetected-chromedriver==3.5.5   # scraper only
+
+pytest==9.0.2

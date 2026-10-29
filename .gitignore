@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# data and outputs (rebuilt by the pipeline, not distributed)
+data/
+scraper/*.db
+scraper/*.log
+scraper/*.csv
+scraper/*.jsonl
+scraper/*.xlsx
+scraper/articles/
+scraper/.hrs_scraper_chrome_profile/
+
+# secrets
+.env
