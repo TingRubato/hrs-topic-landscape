@@ -126,3 +126,7 @@ python scripts/09_final_model.py
   step 3 is deterministic given the embeddings.
 - The rater in step 6 reasons internally, so a new rating run will not reproduce every score.
   Re-running steps 7–9 on saved ratings gives identical results.
+
+## License
+
+MIT. See `LICENSE`.
