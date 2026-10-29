@@ -12,6 +12,12 @@ __pycache__/
 # data and outputs (rebuilt by the pipeline, not distributed)
 data/*
 !data/corpus.csv
+!data/README.md
+!data/raw/
+data/raw/*
+!data/raw/articles.csv
+!data/raw/articles_repaired.csv
+!data/raw/repair_log.csv
 scraper/*.db
 scraper/*.log
 scraper/*.csv

@@ -1,5 +1,17 @@
 # HRS Journal Article Scraper / HRS 期刊文章爬虫
 
+**In this project:** step 0 of the pipeline. It builds `hrs_scraper.db` (SQLite) with one row per
+journal article in the HRS bibliography, and exports it to the CSV that step 1 reads:
+
+```bash
+mkdir -p ../data/raw
+python hrs_scraper.py crawl
+python hrs_scraper.py --csv ../data/raw/articles.csv export   # --csv is a global option: put it before the command
+```
+
+The pipeline uses the columns `article_id`, `title`, `abstract`, `year`, `doi`, `pubmed_id` and
+`journal`. A full crawl takes many hours because of the deliberate delays between requests; keep them.
+
 A CLI scraper for the [Health and Retirement Study (HRS)](https://hrs.isr.umich.edu) publication database. Extracts metadata (title, authors, abstract, DOI, etc.) from journal article bibliography pages.
 
 密歇根大学[健康与退休研究 (HRS)](https://hrs.isr.umich.edu) 出版数据库命令行爬虫。从期刊文章文献目录页提取元数据（标题、作者、摘要、DOI 等）。
@@ -67,7 +79,7 @@ python hrs_scraper.py crawl --no-browser
 python hrs_scraper.py export
 
 # Custom output paths / 自定义输出路径
-python hrs_scraper.py export --jsonl output.jsonl --csv output.csv
+python hrs_scraper.py --jsonl output.jsonl --csv output.csv export
 ```
 
 ### Report / 报告
