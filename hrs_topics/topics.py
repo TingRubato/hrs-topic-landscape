@@ -1,8 +1,10 @@
-"""Topic words by class-based TF-IDF (c-TF-IDF, the BERTopic weighting).
+"""Topic words by class-based TF-IDF (c-TF-IDF), the weighting of BERTopic's ClassTfidfTransformer.
 
-Each topic's abstracts are pooled into one document. A term's weight in topic t is
-    tf(t, term) * log(1 + A / (1 + tf(t, term)))
-where A is the mean number of term occurrences per topic. Outliers (-1) are left out.
+Each topic's abstracts are pooled into one class; outliers (-1) form one more class. A term's weight
+in class c is
+    tf(c, x) / sum_x' tf(c, x')  *  log(1 + A / f(x))
+where f(x) is the term's count summed over all classes and A is the mean number of term occurrences
+per class (as an integer). Terms that are common in every topic get a low weight.
 """
 from pathlib import Path
 
@@ -26,17 +28,24 @@ def vectorizer():
                            token_pattern=r"(?u)\b(?!\d+\b)\w\w+\b")
 
 
+def ctfidf(D, labels):
+    """c-TF-IDF of a document-term count matrix D. Returns (classes incl. -1, weights, idf)."""
+    classes = sorted(int(t) for t in np.unique(labels))
+    col = {t: i for i, t in enumerate(classes)}
+    R = sp.csr_matrix((np.ones(len(labels)), (np.arange(len(labels)), [col[int(l)] for l in labels])),
+                      shape=(D.shape[0], len(classes)))
+    tf = (R.T @ D).toarray().astype(float)                 # term counts per class
+    A = int(tf.sum(axis=1).mean())
+    idf = np.log(1.0 + A / np.maximum(tf.sum(axis=0), 1e-12))
+    weight = tf / np.maximum(tf.sum(axis=1, keepdims=True), 1e-12) * idf
+    return classes, weight, idf
+
+
 def top_words(texts, labels, n=10):
     """Return {topic_id: [n highest-weighted terms]} for every non-outlier topic."""
     vec = vectorizer()
     D = vec.fit_transform(texts)
     terms = vec.get_feature_names_out()
-    topics = sorted(int(t) for t in np.unique(labels) if t != -1)
-    col = {t: i for i, t in enumerate(topics)}
-    rows = np.flatnonzero(labels != -1)
-    R = sp.csr_matrix((np.ones(len(rows)), (rows, [col[int(labels[r])] for r in rows])),
-                      shape=(D.shape[0], len(topics)))
-    tf = (R.T @ D).toarray().astype(float)                 # term counts per topic
-    A = tf.sum(axis=1).mean() + 1e-9
-    weight = tf * np.log(1.0 + A / (1.0 + tf))
-    return {t: [str(terms[j]) for j in np.argsort(-weight[i])[:n]] for t, i in col.items()}
+    classes, weight, _ = ctfidf(D, np.asarray(labels))
+    return {t: [str(terms[j]) for j in np.argsort(-weight[i])[:n]]
+            for i, t in enumerate(classes) if t != -1}
